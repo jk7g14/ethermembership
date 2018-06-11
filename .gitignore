@@ -61,5 +61,5 @@ typings/
 .next
 
 # json files
-ethereum/build
-ethereum/setup.json
+/ethereum/build
+/ethereum/setup.json

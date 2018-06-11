@@ -10,7 +10,7 @@ contract Membership {
     
     address public manager;
     uint public memberCount;
-    mapping(address=>Member) public contributors;
+    mapping(address=>Member) public members;
     
     modifier restricted {
         require(msg.sender == manager);
@@ -22,7 +22,7 @@ contract Membership {
     }
     
     function register(string id) public payable{
-        require(!contributors[msg.sender].registered);
+        require(!members[msg.sender].registered);
         Member memory newMember = Member({
             addr: msg.sender,
             id: id,
@@ -30,12 +30,12 @@ contract Membership {
             registered: true
         });
         memberCount++;
-        contributors[msg.sender] = newMember;
+        members[msg.sender] = newMember;
     }
     
     function contribute() public payable {
-        require(contributors[msg.sender].registered);
-        contributors[msg.sender].amount = contributors[msg.sender].amount + msg.value;
+        require(members[msg.sender].registered);
+        members[msg.sender].amount = members[msg.sender].amount + msg.value;
     }
     
     function getBalance() public view returns (uint) {

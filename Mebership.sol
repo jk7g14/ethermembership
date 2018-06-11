@@ -2,7 +2,6 @@ pragma solidity ^0.4.17;
 
 contract Membership {
     struct Member {
-        address addr;
         string id;
         uint amount;
         bool registered;
@@ -24,7 +23,6 @@ contract Membership {
     function register(string id) public payable{
         require(!members[msg.sender].registered);
         Member memory newMember = Member({
-            addr: msg.sender,
             id: id,
             amount: msg.value,
             registered: true

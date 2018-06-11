@@ -1,9 +1,16 @@
 pragma solidity ^0.4.17;
 
 contract Membership {
+    struct Member {
+        address addr;
+        string id;
+        uint amount;
+        bool registered;
+    }
+    
     address public manager;
     uint public memberCount;
-    mapping(address=>uint) public contributors;
+    mapping(address=>Member) public contributors;
     
     modifier restricted {
         require(msg.sender == manager);
@@ -14,16 +21,21 @@ contract Membership {
         manager = msg.sender;
     }
     
-    function setMessage(address newManager) public {
-        manager = newManager;
+    function register(string id) public payable{
+        require(!contributors[msg.sender].registered);
+        Member memory newMember = Member({
+            addr: msg.sender,
+            id: id,
+            amount: msg.value,
+            registered: true
+        });
+        memberCount++;
+        contributors[msg.sender] = newMember;
     }
     
     function contribute() public payable {
-        uint amount = contributors[msg.sender];
-        if (amount == 0) {
-            memberCount++;
-        }
-        contributors[msg.sender] = amount + msg.value;
+        require(contributors[msg.sender].registered);
+        contributors[msg.sender].amount = contributors[msg.sender].amount + msg.value;
     }
     
     function getBalance() public view returns (uint) {

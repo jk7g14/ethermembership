@@ -63,3 +63,4 @@ typings/
 # json files
 /ethereum/build
 /ethereum/setup.json
+/ethereum/address.json

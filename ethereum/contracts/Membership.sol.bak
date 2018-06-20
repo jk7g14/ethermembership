@@ -1,18 +1,5 @@
 pragma solidity ^0.4.17;
 
-contract MembershipFactory {
-    address[] public deployedMemberships;
-    
-    function createMembership(string url) public{
-        address newMembership = new Membership(url, msg.sender);
-        deployedMemberships.push(newMembership);
-    }
-    
-    function getDeployedMemberships() public view returns (address[]) {
-        return deployedMemberships;
-    }
-}
-
 contract Membership {
     struct Member {
         string id;
@@ -24,24 +11,19 @@ contract Membership {
         address addr;
         uint amount;
     }
-
-    string public url;
+    
     address public manager;
     uint public memberCount;
-    
-    address[] private memberList;
-    Transection[] public transections;
-    
     mapping(address=>Member) public members;
+    Transection[] public transections;
     
     modifier restricted {
         require(msg.sender == manager);
         _;
     }
 
-    constructor(string defualt_url, address creator) public {
-        manager = creator;
-        url = defualt_url;
+    constructor() public payable{
+        manager = msg.sender;
     }
     
     function register(string id, string date) public payable{
@@ -60,7 +42,6 @@ contract Membership {
         transections.push(newTransection);
         memberCount++;
         members[msg.sender] = newMember;
-        memberList.push(msg.sender);
     }
     
     function contribute(string date) public payable {
@@ -85,10 +66,5 @@ contract Membership {
     
     function getTransectionsCount() public view returns (uint) {
         return transections.length;
-    }
-    
-    function getMemberInfo(uint index) public view restricted returns (address, string, uint) {
-        Member memory member = members[address(memberList[index])];
-        return (address(memberList[index]),member.id,member.amount);
     }
 }

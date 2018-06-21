@@ -1,68 +1,49 @@
-import React, { Component } from 'react';
-import { Card, Button, Table } from 'semantic-ui-react';
-import Membership from '../ethereum/membership';
-import web3 from '../ethereum/web3'
+import React, {Component} from 'react';
+import {Card, Button} from 'semantic-ui-react';
+import factory from '../ethereum/factory';
 import Layout from '../components/Layout';
-import MainCards from '../components/MainCards'
-import RequestRow from '../components/RequestRow'
+import {Link} from '../routes';
 
-class MembershipIndex extends Component {
+class CampaignIndex extends Component {
   static async getInitialProps() {
-    const addr = require('../ethereum/address.json');
-    const address = addr.address
-    const membership = Membership(address);
-    const manager = await membership.methods.manager().call();
-    const transectionCount = await membership.methods.getTransectionsCount().call();
-    const transections = await Promise.all(
-      Array(parseInt(transectionCount))
-      .fill()
-      .map((element,index) => {
-        return membership.methods.transections(index).call()
-      })
-    );
+    const memberships = await factory.methods.getDeployedMemberships().call();
 
-    var today = new Date();
-    var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-
-    return { manager, date, transections };
+    return {memberships};
   }
 
-  renderRows() {
-    return this.props.transections.map((transection, index) => {
-      return (<RequestRow
-        key={index}
-        id={index}
-        transection={transection}
-      />
-      );
+  renderMemberships() {
+    const items = this.props.memberships.map(address => {
+      return {
+        header: address,
+        description: (
+          <Link route={`/memberships/${address}`}>
+            <a>View Membership</a>
+          </Link>
+        ),
+        fluid: true,
+      };
     });
+
+    return <Card.Group items={items} />;
   }
 
   render() {
-    const { Header, Row, HeaderCell, Body } = Table;
-    return(
+    return (
       <Layout>
         <div>
-          <h3>{this.props.date}</h3>
-          <h3>manager: {this.props.manager}</h3>
-          <MainCards />
+          <h3>Open Memberships</h3>
+          <Link route="/memberships/new">
+            <a>
+            <Button size="massive" fluid content="Create Membership" icon="add circle" primary />
+            </a>
+          </Link>
+          <br />
+          <br />
+          {this.renderMemberships()}
         </div>
-        <Table>
-          <Header>
-            <Row>
-              <HeaderCell>Index</HeaderCell>
-              <HeaderCell>Date</HeaderCell>
-              <HeaderCell>From</HeaderCell>
-              <HeaderCell>Amount</HeaderCell>
-            </Row>
-          </Header>
-          <Body>
-            { this.renderRows() }
-          </Body>
-        </Table>
       </Layout>
     );
   }
 }
 
-export default MembershipIndex;
+export default CampaignIndex;

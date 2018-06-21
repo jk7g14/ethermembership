@@ -12,8 +12,7 @@ class InfoCard extends Component {
   };
 
   async componentDidMount() {
-    const addr = require('../ethereum/address.json');
-    const membership = Membership(addr.address); 
+    const membership = Membership(this.props.address); 
     const accounts = await web3.eth.getAccounts();
     const regi = await membership.methods.members(accounts[0]).call();
     const manager = await membership.methods.manager().call();

@@ -2,10 +2,12 @@ pragma solidity ^0.4.17;
 
 contract MembershipFactory {
     address[] public deployedMemberships;
+    mapping(address=>address) public membershipAddresses;
     
     function createMembership(string url) public{
         address newMembership = new Membership(url, msg.sender);
         deployedMemberships.push(newMembership);
+        membershipAddresses[msg.sender] = newMembership;
     }
     
     function getDeployedMemberships() public view returns (address[]) {

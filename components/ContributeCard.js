@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { Card, Button, Form, Input, Message } from 'semantic-ui-react';
 import web3 from '../ethereum/web3';
 import Membership from '../ethereum/membership';
+import { Router } from '../routes';
 
 class ContributeCard extends Component {
   state = {
@@ -16,8 +17,7 @@ class ContributeCard extends Component {
     this.setState({ loading:true, errorMessage: '' });
 
     try{
-      const addr = require('../ethereum/address.json');
-      const membership = Membership(addr.address);
+      const membership = Membership(this.props.address);
       var today = new Date();
       var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
       const accounts = await web3.eth.getAccounts();
@@ -31,6 +31,7 @@ class ContributeCard extends Component {
           value: web3.utils.toWei(this.state.value, 'ether')
         });
 
+      Router.pushRoute(`/memberships/${this.props.address}`);
     } catch (err) {
       this.setState({ errorMessage: err.message });
     }

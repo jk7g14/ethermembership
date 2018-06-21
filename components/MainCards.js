@@ -13,8 +13,7 @@ class MainCards extends Component {
   };
 
   async componentDidMount() {
-    const addr = require('../ethereum/address.json');
-    const membership = Membership(addr.address); 
+    const membership = Membership(this.props.address); 
     const accounts = await web3.eth.getAccounts();
     const regi = await membership.methods.members(accounts[0]).call();
     //console.log(regi['registered']);
@@ -24,8 +23,8 @@ class MainCards extends Component {
   render() {
     return (
       <Card.Group>
-        {this.state.registered ? (<InfoCard />) : (<RegisterCard />)}
-        <ContributeCard />
+        {this.state.registered ? (<InfoCard address={this.props.address}/>) : (<RegisterCard address={this.props.address}/>)}
+        <ContributeCard address={this.props.address}/>
       </Card.Group>
 
     );

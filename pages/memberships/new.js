@@ -4,11 +4,12 @@ import Layout from '../../components/Layout';
 import factory from '../../ethereum/factory';
 import web3 from '../../ethereum/web3';
 import { Router } from '../../routes';
+import axios from 'axios';
 
 class CampaignNew extends Component {
   state = {
     url: '',
-    errorMessage: '',
+    errorMessage: '', 
     loading: false
   };
 
@@ -26,6 +27,14 @@ class CampaignNew extends Component {
         });
       const contractAddress = await factory.methods.membershipAddresses(accounts[0]).call();
       console.log(contractAddress);
+      const cid = { 
+        cid: contractAddress
+      };
+      axios.post(`${this.state.url}/users`, { cid })
+      .then(res => {
+        console.log(res);
+        console.log(res.data);
+      });
       Router.pushRoute('/');
     } catch (err) {
       this.setState({ errorMessage: err.message });
@@ -49,7 +58,7 @@ class CampaignNew extends Component {
             />
           </Form.Field>
           <Message error header="Oops!" content={this.state.errorMessage} />
-          <Button loading={this.state.loading} primary content="Create!" />
+          <Button disabled={!this.state.url} loading={this.state.loading} primary content="Create!" />
         </Form>
       </Layout>
     );

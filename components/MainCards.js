@@ -18,12 +18,13 @@ class MainCards extends Component {
     const regi = await membership.methods.members(accounts[0]).call();
     //console.log(regi['registered']);
     this.setState({ registered: regi['registered'] });
+    //console.log(this.props.address);
   }
 
   render() {
     return (
       <Card.Group>
-        {this.state.registered ? (<InfoCard address={this.props.address}/>) : (<RegisterCard address={this.props.address}/>)}
+        {this.state.registered ? (<InfoCard address={this.props.address}/>) : (<RegisterCard address={this.props.address} id={this.props.id}/>)}
         <ContributeCard address={this.props.address}/>
       </Card.Group>
 

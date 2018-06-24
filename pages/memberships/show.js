@@ -8,6 +8,7 @@ import RequestRow from '../../components/RequestRow';
 
 class MembershipIndex extends Component {
   static async getInitialProps(props) {
+    const id = props.query.id;
     const address = props.query.address;
     const membership = Membership(address);
     const manager = await membership.methods.manager().call();
@@ -20,10 +21,10 @@ class MembershipIndex extends Component {
         .fill()
         .map((element, index) => {
           return membership.methods.transections(index).call();
-        }),
+        })
     );
 
-    return {manager, transections, address, urlName};
+    return {manager, transections, address, urlName, id};
   }
 
   renderRows() {
@@ -41,7 +42,7 @@ class MembershipIndex extends Component {
             {this.props.urlName}
           </Header>
           <Header as="h3">manager: {this.props.manager}</Header>
-          <MainCards address={this.props.address} />
+          <MainCards address={this.props.address} id={this.props.id}/>
           <Table>
             <Header>
               <Row>

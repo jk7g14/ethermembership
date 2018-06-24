@@ -6,11 +6,12 @@ import { Router } from '../routes';
 
 class RegisterCard extends Component {
   state = {
-    id: '',
+    id: this.props.id,
     value: '',
     errorMessage: '',
     loading: false
   };
+
 
   onSubmit = async (event) => {
     event.preventDefault();
@@ -55,6 +56,7 @@ class RegisterCard extends Component {
                 <Input
                   value={this.state.id}
                   onChange={event => this.setState({id: event.target.value})}
+                  defaultValue={this.state.id}
                 />
               </Form.Field>
               <Form.Field>

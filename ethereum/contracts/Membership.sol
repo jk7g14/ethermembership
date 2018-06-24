@@ -91,6 +91,6 @@ contract Membership {
     
     function getMemberInfo(uint index) public view restricted returns (address, string, uint) {
         Member memory member = members[address(memberList[index])];
-        return (address(memberList[index]),member.id,member.amount);
+        return (memberList[index],member.id,member.amount);
     }
 }

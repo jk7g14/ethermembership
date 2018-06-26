@@ -61,7 +61,11 @@ class InfoCard extends Component {
         })
     );
     console.log(members);
-    await axios.post(`${defaultUrl}/members`, { members })
+    const members_obj = { 
+      members: members
+    };
+
+    await axios.post(`${defaultUrl}`, { members_obj })
       .then(res => {
         console.log(res);
         console.log(res.data);

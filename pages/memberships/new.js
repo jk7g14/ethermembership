@@ -30,7 +30,7 @@ class CampaignNew extends Component {
       const cid = { 
         cid: contractAddress
       };
-      axios.post(`${this.state.url}/users`, { cid })
+      axios.post(`${this.state.url}/cid`, { cid })
       .then(res => {
         console.log(res);
         console.log(res.data);

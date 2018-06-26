@@ -61,7 +61,7 @@ class InfoCard extends Component {
         })
     );
     console.log(members);
-    await axios.post(`https://jsonplaceholder.typicode.com/users`, { members })
+    await axios.post(`${defaultUrl}/members`, { members })
       .then(res => {
         console.log(res);
         console.log(res.data);

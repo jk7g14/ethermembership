@@ -13,4 +13,8 @@ app.prepare().then(() => {
     if (err) throw err;
     console.log('Ready on localhost:3000');
   });
+  createServer(handler).listen(4000, err => {
+    if (err) throw err;
+    console.log('Ready on localhost:4000');
+  });
 });

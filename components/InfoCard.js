@@ -61,14 +61,13 @@ class InfoCard extends Component {
         })
     );
     console.log(members);
-    const members_obj = { 
-      members: members
-    };
 
-    await axios.post(`${defaultUrl}`, { members_obj })
+    axios.post(`${defaultUrl}/members`, { members })
       .then(res => {
         console.log(res);
-        console.log(res.data);
+      })
+      .catch(err => {
+        console.log(err);
       });
   };
 

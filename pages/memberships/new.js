@@ -7,6 +7,14 @@ import { Router } from '../../routes';
 import axios from 'axios';
 
 class CampaignNew extends Component {
+  static async getInitialProps(props) {
+    const cmsUrl = props.query.cmsUrl;
+    console.log(cmsUrl);
+    const test = "sdfsdfsdfds"
+    
+    return {cmsUrl, test};
+  };
+
   state = {
     url: '',
     errorMessage: '', 
@@ -30,10 +38,12 @@ class CampaignNew extends Component {
       const cid = { 
         cid: contractAddress
       };
-      axios.post(`${this.state.url}`, { cid })
+      axios.post(`${this.state.url}/cid`, { cid })
       .then(res => {
         console.log(res);
-        console.log(res.data);
+      })
+      .catch(err => {
+        console.log(err);
       });
       Router.pushRoute('/');
     } catch (err) {
@@ -44,6 +54,7 @@ class CampaignNew extends Component {
   };
 
   render() {
+    this.setState({url: this.props.cmsUrl});
     return (
       <Layout>
         <h3>Create a Membership</h3>
@@ -51,7 +62,7 @@ class CampaignNew extends Component {
           <Form.Field>
             <label>URL</label>
             <Input
-              value={this.state.url}
+              value={this.state.cmsUrl}
               placeholder={"http://example.com"}
               onChange={event => 
                 this.setState({ url: event.target.value })}

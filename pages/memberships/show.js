@@ -8,7 +8,7 @@ import RequestRow from '../../components/RequestRow';
 
 class MembershipIndex extends Component {
   static async getInitialProps(props) {
-    const id = props.query.id;
+    const id = props.query.userID;
     const address = props.query.address;
     const membership = Membership(address);
     const manager = await membership.methods.manager().call();

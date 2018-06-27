@@ -20,14 +20,21 @@ app.prepare().then(() => {
     next();
   });
 
+
   server.post('/memberships/new', (req, res) => {
     console.log(req.body);
     return app.render(req, res, '/memberships/new', { cmsUrl: req.body.cmsUrl })
   });
 
+  server.param('address', function(request, response, next, address) {
+  // Save the found story object into request object
+    request.address = address;
+    next();
+  });
+
   server.post('/memberships/:address', (req, res) => {
     console.log(req.body);
-    return app.render(req, res, '/memberships/show', { userID: req.body.userID , address: req.body.cid})
+    return app.render(req, res, '/memberships/show', { userID: req.body.userID , address: req.address})
   });
 
   server.get('*', (req, res) => {

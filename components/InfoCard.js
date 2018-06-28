@@ -62,7 +62,7 @@ class InfoCard extends Component {
     );
     console.log(members);
 
-    axios.post(`${defaultUrl}/members`, { members })
+    axios.post(`${defaultUrl}`, { members })
       .then(res => {
         console.log(res);
       })

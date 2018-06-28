@@ -23,7 +23,7 @@ app.prepare().then(() => {
 
   server.post('/memberships/new', (req, res) => {
     console.log(req.body);
-    return app.render(req, res, '/memberships/new', { cmsUrl: req.body.cmsUrl })
+    return app.render(req, res, '/memberships/new', { cmsUrl: req.body.cmsUrl });
   });
 
   server.param('address', function(request, response, next, address) {
@@ -34,7 +34,7 @@ app.prepare().then(() => {
 
   server.post('/memberships/:address', (req, res) => {
     console.log(req.body);
-    return app.render(req, res, '/memberships/show', { userID: req.body.userID , address: req.address})
+    return app.render(req, res, '/memberships/show', { userID: req.body.userID , address: req.address});
   });
 
   server.get('*', (req, res) => {

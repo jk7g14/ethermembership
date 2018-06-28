@@ -10,10 +10,11 @@ class CampaignNew extends Component {
   static async getInitialProps(props) {
     const cmsUrl = props.query.cmsUrl;
     console.log(cmsUrl);
-    const test = "sdfsdfsdfds"
-    
-    return {cmsUrl, test};
-  };
+    return {cmsUrl};
+  }
+  componentDidMount() {
+    this.setState({url: this.props.cmsUrl});
+  }
 
   state = {
     url: '',
@@ -54,7 +55,6 @@ class CampaignNew extends Component {
   };
 
   render() {
-    this.setState({url: this.props.cmsUrl});
     return (
       <Layout>
         <h3>Create a Membership</h3>
@@ -62,10 +62,11 @@ class CampaignNew extends Component {
           <Form.Field>
             <label>URL</label>
             <Input
-              value={this.state.cmsUrl}
+              value={this.state.url}
               placeholder={"http://example.com"}
               onChange={event => 
                 this.setState({ url: event.target.value })}
+              defaultValue={this.state.url}
             />
           </Form.Field>
           <Message error header="Oops!" content={this.state.errorMessage} />

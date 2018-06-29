@@ -62,7 +62,6 @@ class CampaignNew extends Component {
           <Form.Field>
             <label>URL</label>
             <Input
-              value={this.state.url}
               placeholder={"http://example.com"}
               onChange={event => 
                 this.setState({ url: event.target.value })}

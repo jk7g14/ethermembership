@@ -54,7 +54,6 @@ class RegisterCard extends Component {
               <Form.Field>
                 <label>id</label>
                 <Input
-                  value={this.state.id}
                   onChange={event => this.setState({id: event.target.value})}
                   defaultValue={this.state.id}
                 />

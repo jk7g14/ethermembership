@@ -10,7 +10,9 @@ class InfoCard extends Component {
     amount: '',
     isManager: false,
     balance: '',
-    defaultUrl: ''
+    defaultUrl: '',
+    loading: false,
+    errorMessage: ''
   };
 
   async componentDidMount() {
@@ -35,40 +37,49 @@ class InfoCard extends Component {
     };
   }
 
-  onClick = async () => {
-    const membership = Membership(this.props.address); 
-    const accounts = await web3.eth.getAccounts();
-    await membership.methods
-      .collect()
-      .send({
-        from: accounts[0],
-      });
+  onClick = async (event) => {
+    event.preventDefault();
 
-    const defaultUrl = await membership.methods.url().call();
-    console.log(defaultUrl);
+    this.setState({ loading:true, errorMessage: '' });
 
-    const memberCount = await membership.methods
-      .memberCount()
-      .call();
+    try{
+      const membership = Membership(this.props.address); 
+      const accounts = await web3.eth.getAccounts();
+      await membership.methods
+        .collect()
+        .send({
+          from: accounts[0],
+        });
 
-    const members = await Promise.all(
-      Array(parseInt(memberCount))
-        .fill()
-        .map((element, index) => {
-          return membership.methods.getMemberInfo(index).call({
-            from: accounts[0]
+      const defaultUrl = await membership.methods.url().call();
+      console.log(defaultUrl);
+
+      const memberCount = await membership.methods
+        .memberCount()
+        .call();
+
+      const members = await Promise.all(
+        Array(parseInt(memberCount))
+          .fill()
+          .map((element, index) => {
+            return membership.methods.getMemberInfo(index).call({
+              from: accounts[0]
+            })
           })
-        })
-    );
-    console.log(members);
+      );
+      console.log(members);
 
-    axios.post(`${defaultUrl}`, { members })
-      .then(res => {
-        console.log(res);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+      axios.post(`${defaultUrl}`, { members })
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    } catch (err) {
+      this.setState({ errorMessage: err.message });
+    }
+    this.setState({loading: false})
   };
 
   render() {
@@ -88,7 +99,8 @@ class InfoCard extends Component {
             <Button fluid 
               basic color="red" 
               onClick={this.onClick}
-              disabled={false}>
+              disabled={false}
+              loading={this.state.loading}>
               Collect!
             </Button>
             )}

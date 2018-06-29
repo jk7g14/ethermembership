@@ -12,7 +12,7 @@ class CampaignNew extends Component {
     console.log(cmsUrl);
     return {cmsUrl};
   }
-  componentDidMount() {
+  async componentDidMount() {
     this.setState({url: this.props.cmsUrl});
   }
 

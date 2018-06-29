@@ -14,6 +14,7 @@ class CampaignNew extends Component {
   }
   async componentDidMount() {
     this.setState({url: this.props.cmsUrl});
+    console.log(this.props.url);
   }
 
   state = {
@@ -65,7 +66,7 @@ class CampaignNew extends Component {
               placeholder={"http://example.com"}
               onChange={event => 
                 this.setState({ url: event.target.value })}
-              defaultValue={this.state.url}
+              value={this.state.url}
             />
           </Form.Field>
           <Message error header="Oops!" content={this.state.errorMessage} />

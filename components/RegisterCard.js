@@ -61,7 +61,7 @@ class RegisterCard extends Component {
               <Form.Field>
                 <label>amount</label>
                 <Input
-                  value={this.state.value}
+                  value={this.state.value || ''}
                   onChange={event => this.setState({value: event.target.value})}
                   label="ether"
                   labelPosition="right"

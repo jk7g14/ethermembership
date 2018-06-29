@@ -6,15 +6,15 @@ import web3 from '../../ethereum/web3';
 import { Router } from '../../routes';
 import axios from 'axios';
 
-class CampaignNew extends Component {
+class MembershipNew extends Component {
   static async getInitialProps(props) {
     const cmsUrl = props.query.cmsUrl;
-    console.log(cmsUrl);
+    //console.log(cmsUrl);
     return {cmsUrl};
   }
   async componentDidMount() {
     this.setState({url: this.props.cmsUrl});
-    console.log(this.props.url);
+    //console.log(this.props.url);
   }
 
   state = {
@@ -66,7 +66,7 @@ class CampaignNew extends Component {
               placeholder={"http://example.com"}
               onChange={event => 
                 this.setState({ url: event.target.value })}
-              value={this.state.url}
+              value={this.state.url || ''}
             />
           </Form.Field>
           <Message error header="Oops!" content={this.state.errorMessage} />
@@ -78,4 +78,4 @@ class CampaignNew extends Component {
 }
 
 
-export default CampaignNew;
+export default MembershipNew;

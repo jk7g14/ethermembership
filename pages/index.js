@@ -4,7 +4,7 @@ import factory from '../ethereum/factory';
 import Layout from '../components/Layout';
 import {Link} from '../routes';
 
-class CampaignIndex extends Component {
+class FactoryIndex extends Component {
   static async getInitialProps() {
     const memberships = await factory.methods.getDeployedMemberships().call();
 
@@ -46,4 +46,4 @@ class CampaignIndex extends Component {
   }
 }
 
-export default CampaignIndex;
+export default FactoryIndex;

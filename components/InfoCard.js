@@ -76,6 +76,7 @@ class InfoCard extends Component {
         .catch(err => {
           console.log(err);
         });
+      //window.location.assign(`${this.state.url}`);
     } catch (err) {
       this.setState({ errorMessage: err.message });
     }

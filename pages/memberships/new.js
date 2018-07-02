@@ -47,7 +47,8 @@ class MembershipNew extends Component {
       .catch(err => {
         console.log(err);
       });
-      Router.pushRoute('/');
+      //Router.pushRoute('/');
+      window.location.assign(`${this.state.url}`);
     } catch (err) {
       this.setState({ errorMessage: err.message });
     }

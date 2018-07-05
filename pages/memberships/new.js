@@ -37,9 +37,7 @@ class MembershipNew extends Component {
         });
       const contractAddress = await factory.methods.membershipAddresses(accounts[0]).call();
       console.log(contractAddress);
-      const cid = { 
-        cid: contractAddress
-      };
+      const cid = contractAddress;
       axios.post(`${this.state.url}`, { cid })
       .then(res => {
         console.log(res);
@@ -48,7 +46,7 @@ class MembershipNew extends Component {
         console.log(err);
       });
       //Router.pushRoute('/');
-      window.location.assign(`${this.state.url}`);
+      //window.location.assign(`${this.state.url}`);
     } catch (err) {
       this.setState({ errorMessage: err.message });
     }

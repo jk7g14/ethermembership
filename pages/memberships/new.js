@@ -38,7 +38,7 @@ class MembershipNew extends Component {
       const contractAddress = await factory.methods.membershipAddresses(accounts[0]).call();
       console.log(contractAddress);
       const cid = contractAddress;
-      axios.post(`${this.state.url}`, { cid })
+      axios.post(`${this.state.url}/new`, { cid })
       .then(res => {
         console.log(res);
       })

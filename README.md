@@ -14,7 +14,7 @@ Decentralized Application for Membership Plans
 
 Edit ethereum/setup.json.template and change it to setup.json with 12 words of your metamask account and your infura url
 
-## Compiling the contract to bytecode
+## Compiling
 
 ```
  cd ethererum

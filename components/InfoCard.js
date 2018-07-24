@@ -52,13 +52,12 @@ class InfoCard extends Component {
         });
 
       const defaultUrl = await membership.methods.url().call();
-      console.log(defaultUrl);
 
       const memberCount = await membership.methods
         .memberCount()
         .call();
 
-      const members = await Promise.all(
+      var members = await Promise.all(
         Array(parseInt(memberCount))
           .fill()
           .map((element, index) => {
@@ -68,7 +67,19 @@ class InfoCard extends Component {
           })
       );
       console.log(members);
+      try{
+        for (let i=0; i < Object.keys(members).length; i++){
+          console.log(i);
+          console.log(members[i][2]);
+          members[i][2] = web3.utils.fromWei(members[i][2].toString(),'ether');
+          console.log(members[i][2]);
+        }
 
+      } catch(err) {
+        console.log(err)
+      }
+      console.log(members); 
+      members = JSON.stringify(members);
       axios.post(`${defaultUrl}/membership`, { members })
         .then(res => {
           console.log(res);

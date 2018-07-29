@@ -38,3 +38,10 @@ deployed factory contract address will be saved in address.json
  npm run build
  npm start
 ```
+
+## Docker
+```
+docker build -t ethermembership .
+docker run --user=u1 --name=em1 -p 8000:8000 -v $PWD:/home/u1/node -it ethermembership
+```
+
